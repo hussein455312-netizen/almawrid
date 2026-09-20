@@ -1,0 +1,470 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function Home() {
+  const [loaded, setLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  return (
+    <main className="min-h-screen overflow-x-hidden bg-[#080808] text-white selection:bg-[#D4AF37] selection:text-black">
+      {/* ================= NAVBAR ================= */}
+      <header
+        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+          scrolled
+            ? "border-b border-white/10 bg-[#080808]/90 shadow-2xl shadow-black/30 backdrop-blur-2xl"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
+          {/* LOGO */}
+          <a
+            href="#home"
+            onClick={closeMenu}
+            className="group relative z-50 text-xl font-semibold tracking-[0.35em] text-[#D4AF37]"
+          >
+            ALMAWRID
+            <span className="absolute -bottom-2 left-0 h-px w-0 bg-[#D4AF37] transition-all duration-500 group-hover:w-full" />
+          </a>
+
+          {/* DESKTOP NAV */}
+          <nav className="hidden items-center gap-10 md:flex">
+            {[
+              ["HOME", "#home"],
+              ["ABOUT", "#about"],
+              ["SERVICES", "#services"],
+              ["CONTACT", "#contact"],
+            ].map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                className="group relative py-2 text-[10px] tracking-[0.25em] text-white/65 transition duration-300 hover:text-white"
+              >
+                {label}
+
+                <span className="absolute bottom-0 left-0 h-px w-0 bg-[#D4AF37] transition-all duration-300 group-hover:w-full" />
+              </a>
+            ))}
+
+            <a
+              href="#contact"
+              className="ml-3 border border-[#D4AF37]/70 px-5 py-3 text-[10px] tracking-[0.2em] text-[#D4AF37] transition duration-300 hover:bg-[#D4AF37] hover:text-black"
+            >
+              CONTACT US
+            </a>
+          </nav>
+
+          {/* MOBILE MENU BUTTON */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            className="relative z-50 flex h-11 w-11 items-center justify-center border border-white/10 md:hidden"
+          >
+            <div className="flex w-5 flex-col gap-1.5">
+              <span
+                className={`block h-px w-full bg-[#D4AF37] transition-all duration-300 ${
+                  menuOpen ? "translate-y-[4px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`block h-px w-full bg-[#D4AF37] transition-all duration-300 ${
+                  menuOpen ? "-translate-y-[2px] -rotate-45" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        <div
+          className={`absolute left-0 top-0 min-h-screen w-full bg-[#080808] transition-all duration-500 md:hidden ${
+            menuOpen
+              ? "pointer-events-auto translate-y-0 opacity-100"
+              : "pointer-events-none -translate-y-full opacity-0"
+          }`}
+        >
+          <div className="flex min-h-screen flex-col justify-center px-8">
+            <p className="mb-12 text-[9px] tracking-[0.4em] text-[#D4AF37]">
+              ALMAWRID
+            </p>
+
+            <nav className="flex flex-col">
+              {[
+                ["01", "HOME", "#home"],
+                ["02", "ABOUT", "#about"],
+                ["03", "SERVICES", "#services"],
+                ["04", "CONTACT", "#contact"],
+              ].map(([number, label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={closeMenu}
+                  className="group flex items-center gap-6 border-b border-white/10 py-6"
+                >
+                  <span className="text-[9px] tracking-[0.25em] text-[#D4AF37]/60">
+                    {number}
+                  </span>
+
+                  <span className="text-2xl font-light tracking-[0.12em] text-white transition duration-300 group-hover:text-[#D4AF37]">
+                    {label}
+                  </span>
+                </a>
+              ))}
+            </nav>
+
+            <div className="mt-12">
+              <p className="text-[9px] tracking-[0.3em] text-white/25">
+                REAL ESTATE INVESTMENT
+              </p>
+
+              <p className="mt-3 text-[9px] tracking-[0.3em] text-white/25">
+                BAGHDAD — IRAQ
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ================= HERO ================= */}
+      <section
+        id="home"
+        className="relative flex min-h-screen items-center overflow-hidden"
+      >
+        {/* Architectural grid */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[12%] top-0 h-full w-px bg-white/[0.05]" />
+          <div className="absolute left-[28%] top-0 h-full w-px bg-white/[0.035]" />
+          <div className="absolute right-[28%] top-0 h-full w-px bg-white/[0.035]" />
+          <div className="absolute right-[12%] top-0 h-full w-px bg-white/[0.05]" />
+
+          <div className="absolute left-0 top-[30%] h-px w-full bg-white/[0.04]" />
+          <div className="absolute left-0 top-[70%] h-px w-full bg-white/[0.04]" />
+        </div>
+
+        {/* Giant background letter */}
+        <div className="pointer-events-none absolute right-[-3%] top-1/2 -translate-y-1/2 select-none text-[28rem] font-black leading-none text-white/[0.018] sm:text-[35rem] lg:text-[38rem]">
+          A
+        </div>
+
+        {/* Gold glow */}
+        <div className="pointer-events-none absolute -left-40 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-[#D4AF37]/[0.035] blur-[120px]" />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-20 lg:px-10">
+          <div
+            className={`max-w-5xl transition-all duration-[1400ms] ${
+              loaded
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
+            <p className="mb-8 text-[10px] font-medium tracking-[0.45em] text-[#D4AF37]">
+              REAL ESTATE INVESTMENT
+            </p>
+
+            <h1 className="max-w-5xl text-6xl font-light leading-[0.95] tracking-[-0.04em] sm:text-7xl md:text-8xl lg:text-[9rem]">
+              Building
+              <br />
+              <span className="font-medium text-[#D4AF37]">value.</span>
+            </h1>
+
+            <div className="mt-12 max-w-xl border-l border-[#D4AF37]/60 pl-6">
+              <p className="text-sm leading-7 text-white/55 md:text-base">
+                ALMAWRID is a real estate investment company focused on
+                creating lasting value through strategic thinking,
+                professional expertise, and a clear vision for the future.
+              </p>
+            </div>
+
+            <div className="mt-12">
+              <a
+                href="#about"
+                className="group inline-flex items-center gap-5 border border-[#D4AF37] px-7 py-4 text-[10px] tracking-[0.25em] text-[#D4AF37] transition duration-500 hover:bg-[#D4AF37] hover:text-black"
+              >
+                DISCOVER ALMAWRID
+
+                <span className="transition-transform duration-500 group-hover:translate-x-2">
+                  →
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div
+            className={`absolute bottom-10 left-6 right-6 flex items-end justify-between transition-all delay-500 duration-1000 lg:left-10 lg:right-10 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <p className="text-[9px] tracking-[0.3em] text-white/30">
+              BAGHDAD — IRAQ
+            </p>
+
+            <div className="hidden text-right sm:block">
+              <p className="text-[9px] tracking-[0.3em] text-white/30">
+                ALMAWRID
+              </p>
+
+              <p className="mt-2 text-[8px] tracking-[0.25em] text-[#D4AF37]/60">
+                REAL ESTATE INVESTMENT
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= ABOUT ================= */}
+      <section
+        id="about"
+        className="relative overflow-hidden border-t border-white/10 bg-[#0b0b0b] py-32 lg:py-44"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="grid gap-20 lg:grid-cols-2 lg:gap-32">
+            <div>
+              <p className="mb-8 text-[10px] tracking-[0.4em] text-[#D4AF37]">
+                ABOUT ALMAWRID
+              </p>
+
+              <h2 className="text-5xl font-light leading-[1.05] tracking-[-0.03em] md:text-7xl">
+                We think
+                <br />
+                <span className="text-[#D4AF37]">beyond</span>
+                <br />
+                real estate.
+              </h2>
+            </div>
+
+            <div className="flex flex-col justify-end">
+              <div className="h-px w-16 bg-[#D4AF37]" />
+
+              <p className="mt-8 text-sm leading-8 text-white/55 md:text-base">
+                ALMAWRID is built around a simple principle: real estate is
+                more than buildings. It is about creating environments,
+                opportunities, and long-term value.
+              </p>
+
+              <p className="mt-6 text-sm leading-8 text-white/40 md:text-base">
+                Our approach combines market understanding, strategic
+                thinking, and professional execution to create meaningful
+                value across every stage of the real estate journey.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-32 grid border-t border-white/10 md:grid-cols-3">
+            {[
+              {
+                number: "01",
+                title: "VISION",
+                text: "Looking beyond today to create sustainable long-term value.",
+              },
+              {
+                number: "02",
+                title: "EXPERTISE",
+                text: "Combining knowledge, strategy, and experience to make informed decisions.",
+              },
+              {
+                number: "03",
+                title: "VALUE",
+                text: "Creating meaningful outcomes designed to last.",
+              },
+            ].map((item) => (
+              <div
+                key={item.number}
+                className="group border-b border-white/10 py-10 md:border-b-0 md:border-r md:px-10 first:md:pl-0 last:md:border-r-0"
+              >
+                <p className="text-[10px] tracking-[0.3em] text-[#D4AF37]">
+                  {item.number}
+                </p>
+
+                <h3 className="mt-5 text-xl tracking-wide transition duration-300 group-hover:text-[#D4AF37]">
+                  {item.title}
+                </h3>
+
+                <p className="mt-5 max-w-sm text-sm leading-7 text-white/40">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= SERVICES ================= */}
+      <section
+        id="services"
+        className="border-t border-white/10 bg-[#080808] py-32 lg:py-44"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mb-20 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <div>
+              <p className="mb-8 text-[10px] tracking-[0.4em] text-[#D4AF37]">
+                WHAT WE DO
+              </p>
+
+              <h2 className="text-5xl font-light tracking-[-0.03em] md:text-7xl">
+                Our
+                <br />
+                <span className="text-[#D4AF37]">services.</span>
+              </h2>
+            </div>
+
+            <p className="max-w-sm text-sm leading-7 text-white/40">
+              A focused range of professional real estate services designed
+              around strategy, value, and long-term growth.
+            </p>
+          </div>
+
+          <div className="border-t border-white/10">
+            {[
+              {
+                number: "01",
+                title: "REAL ESTATE INVESTMENT",
+                text: "Strategic investment solutions built around market knowledge, opportunity, and long-term value.",
+              },
+              {
+                number: "02",
+                title: "REAL ESTATE CONSULTING",
+                text: "Professional insight and strategic guidance to support informed real estate decisions.",
+              },
+              {
+                number: "03",
+                title: "REAL ESTATE MARKETING",
+                text: "Modern marketing strategies designed to strengthen positioning, visibility, and market presence.",
+              },
+              {
+                number: "04",
+                title: "PROPERTY MANAGEMENT",
+                text: "Structured management focused on efficiency, performance, and preserving long-term value.",
+              },
+            ].map((service) => (
+              <div
+                key={service.number}
+                className="group grid border-b border-white/10 py-8 transition duration-500 hover:bg-white/[0.015] md:grid-cols-[100px_1fr_1fr] md:items-center md:gap-10 md:py-10 md:hover:px-4"
+              >
+                <span className="text-[10px] tracking-[0.3em] text-[#D4AF37]">
+                  {service.number}
+                </span>
+
+                <h3 className="mt-4 text-lg tracking-[0.08em] transition duration-500 group-hover:text-[#D4AF37] md:mt-0 md:text-xl">
+                  {service.title}
+                </h3>
+
+                <p className="mt-4 max-w-md text-sm leading-7 text-white/35 md:mt-0">
+                  {service.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CONTACT ================= */}
+      <section
+        id="contact"
+        className="relative overflow-hidden border-t border-white/10 bg-[#0b0b0b] py-32 lg:py-44"
+      >
+        <div className="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 text-[20rem] font-black leading-none text-white/[0.015] sm:text-[25rem]">
+          M
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+          <p className="mb-8 text-[10px] tracking-[0.4em] text-[#D4AF37]">
+            GET IN TOUCH
+          </p>
+
+          <div className="grid gap-16 lg:grid-cols-2">
+            <div>
+              <h2 className="text-5xl font-light leading-[1.05] tracking-[-0.03em] md:text-7xl">
+                Let's build
+                <br />
+                <span className="text-[#D4AF37]">something</span>
+                <br />
+                valuable.
+              </h2>
+            </div>
+
+            <div className="flex flex-col justify-end">
+              <p className="max-w-lg text-sm leading-8 text-white/45 md:text-base">
+                For business inquiries, partnerships, or professional
+                consultation, contact the ALMAWRID team.
+              </p>
+
+              <div className="mt-10 space-y-5">
+                <a
+                  href="mailto:almawredcompany556@gmail.com"
+                  className="block border-b border-white/10 pb-5 text-sm tracking-[0.08em] transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                >
+                  almawredcompany556@gmail.com
+                </a>
+
+                <a
+                  href="tel:+9647775197580"
+                  className="block border-b border-white/10 pb-5 text-sm tracking-[0.08em] transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                >
+                  +964 777 519 7580
+                </a>
+
+                <div className="border-b border-white/10 pb-5">
+                  <p className="text-[9px] tracking-[0.3em] text-white/25">
+                    LOCATION
+                  </p>
+
+                  <p className="mt-2 text-sm text-white/65">
+                    BAGHDAD, IRAQ
+                  </p>
+                </div>
+
+                <div className="border-b border-white/10 pb-5">
+                  <p className="text-[9px] tracking-[0.3em] text-white/25">
+                    COMPANY
+                  </p>
+
+                  <p className="mt-2 text-sm text-white/65">
+                    ALMAWRID — REAL ESTATE INVESTMENT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="border-t border-white/10 bg-[#080808]">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-6 py-8 sm:flex-row sm:items-center lg:px-10">
+          <p className="text-[9px] tracking-[0.25em] text-white/25">
+            © {new Date().getFullYear()} ALMAWRID
+          </p>
+
+          <p className="text-[9px] tracking-[0.25em] text-white/25">
+            REAL ESTATE INVESTMENT
+          </p>
+
+          <p className="text-[9px] tracking-[0.25em] text-[#D4AF37]/50">
+            BAGHDAD — IRAQ
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
